@@ -1,1 +1,1 @@
-# meetup-bot
+# Meetup Bot
