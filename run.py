@@ -1,3 +1,4 @@
+import os
 import time
 
 import requests
@@ -28,11 +29,25 @@ def get_upcoming_meetups_for_group(group_name):
             print('%s (%s)' % (event_name, event_date))
 
 
-if __name__ == '__main__':
-    meetups = ['elastic-switzerland',
-               'Zurich-Apache-Kafka-Meetup-by-Confluent',
-               'Machine-Learning-Artificial-Intelligence-Meetup-Bern',
-               'docker-switzerland']
+def find_groups(country=None, text=None):
+    api_key = os.environ.get('API_KEY')
 
-    for meetup in meetups:
-        get_upcoming_meetups_for_group(meetup)
+    if not api_key:
+        raise ValueError("The environmental variable 'API_KEY' has to be set"
+                         + " in order to use the 'find_groups' method")
+
+    params = {'country': country,
+              'text': text,
+              'sign': True,
+              'key': api_key}
+    r = requests.get('https://api.meetup.com/find/groups', params=params)
+    groups = r.json()
+
+    return groups
+
+
+if __name__ == '__main__':
+    groups = find_groups('switzerland', 'machine learning')
+    for g in groups:
+        print(g['name'])
+        get_upcoming_meetups_for_group(g['urlname'])
