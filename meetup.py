@@ -30,11 +30,11 @@ def get_upcoming_meetups_for_group(group_name):
 
 
 def find_groups(country=None, text=None):
-    api_key = os.environ.get('API_KEY')
+    api_key = os.environ.get('MEETUP_API_KEY')
 
     if not api_key:
-        raise ValueError("The environmental variable 'API_KEY' has to be set"
-                         + " in order to use the 'find_groups' method")
+        raise ValueError("The environmental variable 'MEETUP_API_KEY' has to be"
+                         + " set in order to use the 'find_groups' method")
 
     params = {'country': country,
               'text': text,
