@@ -102,10 +102,14 @@ if __name__ == "__main__":
         print("Slack Bot connected and running!")
 
         while True:
-            command, channel = bot.read_and_parse()
-            if command and channel:
-                bot.handle_command(command, channel)
+            try:
+                command, channel = bot.read_and_parse()
+                if command and channel:
+                    bot.handle_command(command, channel)
 
-            time.sleep(READ_WEBSOCKET_DELAY)
+                time.sleep(READ_WEBSOCKET_DELAY)
+            except KeyboardInterrupt:
+                print("\rBot shut down by user")
+                break
     else:
         print("Connection failed. Invalid Slack token or bot ID?")
