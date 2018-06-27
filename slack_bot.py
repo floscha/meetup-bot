@@ -23,8 +23,9 @@ class SlackBot(object):
             users = api_call.get('members')
 
             # Exit when the meetup bot is not amongst the users.
-            print("Could not find bot user with the name " + bot_name)
-            return
+            if not users:
+                print("Could not find bot user with the name " + bot_name)
+                return
 
             for user in users:
                 if 'name' in user and user.get('name') == bot_name:
