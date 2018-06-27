@@ -3,6 +3,8 @@ import time
 
 from slackclient import SlackClient
 
+import meetup
+
 
 class SlackBot(object):
     """Chatbot to interact with the user through Slack."""
@@ -39,11 +41,15 @@ class SlackBot(object):
     def handle_command(self, command, channel):
         """Handle incoming text messages from the user."""
         text = 'Hello!'
+        post_message(channel, text)
 
+    def post_message(self, channel, text, attachments=None):
+        """Use the chatbot to post a message text to the given channel."""
         self.slack.api_call(
             "chat.postMessage",
             channel=channel,
             text=text,
+            attachments=attachments,
             as_user=True
         )
 
