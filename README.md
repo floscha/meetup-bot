@@ -16,7 +16,12 @@
 ```
 export MEETUP_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
-2. Install all dependencies:
+
+2. Set the environmental variable `SLACK_BOT_TOKEN` to your `Bot User OAuth Access Token` from [Slack API](https://api.slack.com/):
+```
+export SLACK_BOT_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+3. Install all dependencies:
 ```
 pip install -r requirements.txt
 ```
