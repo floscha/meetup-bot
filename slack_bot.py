@@ -41,8 +41,30 @@ class SlackBot(object):
 
     def handle_command(self, command, channel):
         """Handle incoming text messages from the user."""
-        text = 'Hello!'
-        post_message(channel, text)
+        lowered_command = command.lower()
+        if lowered_command.startswith('find '):
+            find_position = len('find ')
+            groups_text_position = lowered_command.find(' groups ')
+            country_name_position = lowered_command.find(' in ')
+
+            if groups_text_position < 0:
+                text = None
+            else:
+                text = lowered_command[find_position:groups_text_position]
+
+            if country_name_position < 0:
+                country = None
+            else:
+                country = lowered_command[country_name_position:]
+
+            groups = meetup.find_groups(country, text)
+
+            message_text = 'I found you the following meetups:'
+            attachments = []
+            for g in groups:
+                attachments.append({'title': g['name'],
+                                    'title_link': g['link']})
+            self.post_message(channel, message_text, attachments)
 
     def post_message(self, channel, text, attachments=None):
         """Use the chatbot to post a message text to the given channel."""
