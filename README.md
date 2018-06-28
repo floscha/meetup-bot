@@ -7,7 +7,7 @@
 ## Feature Roadmap
 
 - [x] Query [Meetup API](https://www.meetup.com/meetup_api) from Python.
-- [ ] Access above functionality using a [Slack chatbot](https://api.slack.com/bot-users).
+- [x] Access above functionality using a [Slack chatbot](https://api.slack.com/bot-users).
 - [ ] Make interactions more natural by integrating [Dialogflow](https://dialogflow.com/).
 
 ## Setup
