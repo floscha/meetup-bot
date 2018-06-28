@@ -25,3 +25,10 @@ export SLACK_BOT_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 pip install -r requirements.txt
 ```
+
+## Supported commands
+
+- `find <text> group in <country>`
+  - Find meetup groups in an (optional) country
+- `find <text> meetups in <country>`
+  - Find meetup events in an (optional) country
