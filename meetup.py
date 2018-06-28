@@ -21,12 +21,16 @@ def get_upcoming_meetups_for_group(group_name):
     except:
         return
 
+    event_list = []
     for e in events:
         event_name = e['name']
         event_time = e['time'] / 1000
         if event_time > current_time:
             event_date = format_time(event_time)
-            print('%s (%s)' % (event_name, event_date))
+            e['formatted_date'] = event_date
+            event_list.append(e)
+
+    return event_list
 
 
 def find_groups(country=None, text=None):
