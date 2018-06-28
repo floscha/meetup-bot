@@ -6,6 +6,10 @@ from slackclient import SlackClient
 import meetup
 
 
+# Crop descriptions to the size of (old) Twitter messages.
+DESCRITION_LIMIT = 140  # Characters.
+
+
 class SlackBot(object):
     """Chatbot to interact with the user through Slack."""
 
@@ -45,26 +49,56 @@ class SlackBot(object):
         if lowered_command.startswith('find '):
             find_position = len('find ')
             groups_text_position = lowered_command.find(' groups ')
+            meetups_text_position = lowered_command.find(' meetups ')
             country_name_position = lowered_command.find(' in ')
-
-            if groups_text_position < 0:
-                text = None
-            else:
-                text = lowered_command[find_position:groups_text_position]
 
             if country_name_position < 0:
                 country = None
             else:
                 country = lowered_command[country_name_position:]
 
-            groups = meetup.find_groups(country, text)
+            if groups_text_position < 0:
+                if meetups_text_position < 0:
+                    text = None
+                else:
+                    self.post_message(channel, "Let me see what I can find...")
 
-            message_text = 'I found you the following meetups:'
-            attachments = []
-            for g in groups:
-                attachments.append({'title': g['name'],
-                                    'title_link': g['link']})
-            self.post_message(channel, message_text, attachments)
+                    text = lowered_command[find_position:meetups_text_position]
+                    groups = meetup.find_groups(country, text)
+                    meetups = []
+                    for g in groups:
+                        new_meetups = meetup.get_upcoming_meetups_for_group(
+                            g['urlname']
+                        )
+                        if new_meetups:
+                            meetups.extend(new_meetups)
+
+                    # Sort meetups by date.
+                    meetups = sorted(meetups, key=lambda m: m['time'])
+
+                    message_text = 'I found you the following meetups:'
+                    attachments = []
+                    for m in meetups:
+                        attachments.append({
+                            'title': m['name'],
+                            'title_link': m['event_url'],
+                            # Crop too long descriptions.
+                            'text': m['description'][:DESCRITION_LIMIT],
+                            # Convert timestamp to Unix time.
+                            'ts': m['time'] / 1000})
+                    self.post_message(channel, message_text, attachments)
+
+            else:
+                text = lowered_command[find_position:groups_text_position]
+
+                groups = meetup.find_groups(country, text)
+
+                message_text = 'I found you the following meetup groups:'
+                attachments = []
+                for g in groups:
+                    attachments.append({'title': g['name'],
+                                        'title_link': g['link']})
+                self.post_message(channel, message_text, attachments)
 
     def post_message(self, channel, text, attachments=None):
         """Use the chatbot to post a message text to the given channel."""
