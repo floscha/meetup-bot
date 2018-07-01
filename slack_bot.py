@@ -86,6 +86,18 @@ class SlackBot(object):
                             'text': m['description'][:DESCRITION_LIMIT],
                             # Convert timestamp to Unix time.
                             'ts': m['time'] / 1000})
+                    # Add attachment for 'show more' button
+                    attachments.append({
+                        'fallback': 'You are unable to choose a game',
+                        'callback_id': 'find_more',
+                        'attachment_type': 'default',
+                        'actions': [{
+                            'name': 'more',
+                            'text': 'Find more',
+                            'type': 'button',
+                            'value': 'more'
+                            }]
+                        })
                     self.post_message(channel, message_text, attachments)
 
             else:
