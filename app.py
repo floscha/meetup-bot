@@ -1,5 +1,7 @@
 from flask import Flask, request, jsonify
 
+import meetup
+
 
 app = Flask(__name__)
 
@@ -11,12 +13,13 @@ def index():
 
 def handle_dialogflow_request(query):
     """Handle a webhook query from Dialogflow.
-    
+
     Reference: https://dialogflow.com/docs/fulfillment
 
     Args:
         query (dict): Dialogflow webhook query.
-
+    Returns:
+        dict: Response that can be interpreted by Dialogflow.
     """
     query_result = query['queryResult']
 
@@ -31,8 +34,20 @@ def handle_dialogflow_request(query):
     # String: The language that was triggered during intent matching.
     intent_language = query_result['languageCode']
 
+    groups = meetup.find_groups(country, 'machine learning')
+    meetups = []
+    for g in groups:
+        new_meetups = meetup.get_upcoming_meetups_for_group(g['urlname'])
+        if new_meetups:
+            meetups.extend(new_meetups)
+
+    # Sort meetups by date.
+    meetups = sorted(meetups, key=lambda m: m['time'])
+
+    response_text = '\n'.join([m['name'] for m in meetups])
+
     response = {'fulfillmentText': 'some text',
-                'fulfillmentMessages': [{'text': {'text': [str(query_result)]}}],
+                'fulfillmentMessages': [{'text': {'text': [response_text]}}],
                 'source': ''}
 
 
