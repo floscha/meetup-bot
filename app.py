@@ -45,8 +45,10 @@ def handle_dialogflow_request(query):
 
     # Sort meetups by date.
     meetups = sorted(meetups, key=lambda m: m['time'])
+    print(meetups)
 
     response_text = '\n'.join([m['name'] for m in meetups])
+    print(response_text)
 
     response = {'fulfillmentText': 'some text',
                 'fulfillmentMessages': [{'text': {'text': [response_text]}}],
