@@ -8,7 +8,7 @@
 
 - [x] Query [Meetup API](https://www.meetup.com/meetup_api) from Python.
 - [x] Access above functionality using a [Slack chatbot](https://api.slack.com/bot-users).
-- [ ] Make interactions more natural by integrating [Dialogflow](https://dialogflow.com/).
+- [x] Make interactions more natural by integrating [Dialogflow](https://dialogflow.com/).
 
 ## Setup
 
