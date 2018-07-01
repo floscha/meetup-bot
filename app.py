@@ -51,6 +51,8 @@ def handle_dialogflow_request(query):
                                         for m in meetups],
                 'source': ''}
 
+    return response
+
 
 @app.route('/dialogflow', methods=['POST'])
 def dialogflow_webhook():
