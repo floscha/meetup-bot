@@ -34,6 +34,8 @@ def handle_dialogflow_request(query):
     # String: The language that was triggered during intent matching.
     intent_language = query_result['languageCode']
 
+    country = parameters['geo-country']
+
     groups = meetup.find_groups(country, 'machine learning')
     meetups = []
     for g in groups:
