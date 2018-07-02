@@ -62,3 +62,7 @@ def dialogflow_webhook():
     json_response = jsonify(response)
 
     return json_response
+
+
+if __name__ == '__main__':
+    app.run(debug=True, use_reloader=True)
