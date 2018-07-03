@@ -24,15 +24,15 @@ def handle_dialogflow_request(query):
     query_result = query['queryResult']
 
     # String: The original text of the query.
-    query_text = query_result['queryText']
+    # query_text = query_result['queryText']
     # Object: Consists of parameter_name:parameter_value pairs.
     parameters = query_result['parameters']
     # Object: The intent that matched the user's query.
-    intent = query_result['intent']
+    # intent = query_result['intent']
     # Number 0-1: Matching score for the intent.
-    detection_confidence = query_result['intentDetectionConfidence']
+    # detection_confidence = query_result['intentDetectionConfidence']
     # String: The language that was triggered during intent matching.
-    intent_language = query_result['languageCode']
+    # intent_language = query_result['languageCode']
 
     country = parameters['geo-country']
 
