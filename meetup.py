@@ -23,7 +23,6 @@ def get_upcoming_meetups_for_group(group_name):
 
     event_list = []
     for e in events:
-        event_name = e['name']
         event_time = e['time'] / 1000
         if event_time > current_time:
             event_date = format_time(event_time)
