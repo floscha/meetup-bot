@@ -21,7 +21,14 @@ export MEETUP_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 export SLACK_BOT_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
-3. Install all dependencies:
+
+
+3. Set the environmental variable `DIALOGFLOW_CLIENT_TOKEN` to your `Client Access Token` from [Dialogflow API](https://console.dialogflow.com/api-client):
+```
+export DIALOGFLOW_CLIENT_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+4. Install all dependencies:
 ```
 pip install -r requirements.txt
 ```
