@@ -21,7 +21,6 @@ def handle_dialogflow_request(query):
     Returns:
         dict: Response that can be interpreted by Dialogflow.
     """
-    print(query)
     query_result = query['result']
 
     # String: The original text of the query.
@@ -47,9 +46,8 @@ def handle_dialogflow_request(query):
     # Sort meetups by date.
     meetups = sorted(meetups, key=lambda m: m['time'])
 
-    response = {'fulfillmentText': 'some text',
-                'fulfillmentMessages': [{'text': {'text': [m['name']]}}
-                                        for m in meetups],
+    response = {'messages': [{'type': 0, 'speech': m['name']}
+                             for m in meetups],
                 'source': ''}
 
     return response
