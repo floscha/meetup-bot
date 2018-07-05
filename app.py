@@ -14,14 +14,15 @@ def index():
 def handle_dialogflow_request(query):
     """Handle a webhook query from Dialogflow.
 
-    Reference: https://dialogflow.com/docs/fulfillment
+    Reference: https://dialogflow.com/docs/fulfillment#v1-api
 
     Args:
         query (dict): Dialogflow webhook query.
     Returns:
         dict: Response that can be interpreted by Dialogflow.
     """
-    query_result = query['queryResult']
+    print(query)
+    query_result = query['result']
 
     # String: The original text of the query.
     # query_text = query_result['queryText']
